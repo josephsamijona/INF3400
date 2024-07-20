@@ -1,0 +1,57 @@
+{% extends 'expressions/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Quiz sur les Expressions Québécoises</h1>
+    <a href="{% url 'main_menu' %}" class="back-button">Retour au Dashboard</a>
+    <form id="quizForm">
+        {% csrf_token %}
+        {% for question in questions %}
+        <div class="mb-3">
+            <p>{{ forloop.counter }}. {{ question.question }}</p>
+            <input type="radio" name="{{ question.id }}" value="True" required> Vrai
+            <input type="radio" name="{{ question.id }}" value="False" required> Faux
+        </div>
+        {% endfor %}
+        <button type="button" class="btn btn-primary" onclick="submitQuiz()">Soumettre les réponses</button>
+    </form>
+</div>
+
+<!-- Modal for displaying quiz results -->
+<div class="modal fade" id="quizResultModal" tabindex="-1" role="dialog" aria-labelledby="quizResultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="quizResultModalLabel">Résultats du Quiz</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="quizScore"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" onclick="location.reload()">Refaire le Quiz</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function submitQuiz() {
+    const form = document.getElementById('quizForm');
+    const formData = new FormData(form);
+    fetch("{% url 'quiz' %}", {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('quizScore').innerText = `Votre score est ${data.score} sur ${data.total}.`;
+        $('#quizResultModal').modal('show');
+    })
+    .catch(error => console.error('Error:', error));
+}
+</script>
+{% endblock %}

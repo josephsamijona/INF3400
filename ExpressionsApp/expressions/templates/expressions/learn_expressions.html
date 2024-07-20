@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apprendre les Expressions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .back-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block; /* Ensures the anchor behaves like a button */
+            text-align: center;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Apprendre les Expressions Québécoises</h1>
+        <a href="{% url 'main_menu' %}" class="back-button">Retour au Dashboard</a>
+
+        <!-- Section pour apprendre les expressions -->
+        <div class="list-group mt-4">
+            {% for expression in expressions %}
+            <a href="#" class="list-group-item list-group-item-action">
+                {{ expression.expression }} - {{ expression.meaning }}
+            </a>
+            {% endfor %}
+        </div>
+        
+        <!-- Section pour transformer une phrase -->
+        <div class="mt-5">
+            <h2>Transformer une phrase en interrogative</h2>
+            <p>Entrez une phrase pour voir comment elle est transformée en québécois:</p>
+            <input type="text" id="inputSentence" class="form-control mb-2" placeholder="Entrez votre phrase ici">
+            <button onclick="transformSentence()" class="btn btn-primary">Transformer</button>
+            <p class="mt-3" id="outputSentence"></p>
+        </div>
+    </div>
+
+    <script>
+    function transformSentence() {
+        var sentence = document.getElementById('inputSentence').value;
+        var lastWord = sentence.split(' ').pop();
+        var question = '';
+        // Conditions simplifiées pour démonstration
+        if (['vient', 'veux', 'veulent', 'écoutes', 'sais', 'a', 'ai'].includes(lastWord)) {
+            question = sentence + '-tu ?';
+        } else {
+            question = sentence + ' (pas de transformation possible)';
+        }
+        document.getElementById('outputSentence').innerText = question;
+    }
+    </script>
+</body>
+</html>

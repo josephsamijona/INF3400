@@ -1,0 +1,57 @@
+{% extends 'expressions/base.html' %}
+{% load static %}
+
+{% block title %}Trouver la Signification{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Trouver la Signification d'une Expression Québécoise</h1>
+    <a href="{% url 'main_menu' %}" class="back-button">Retour au Dashboard</a>
+    <div class="input-group mb-3">
+        
+        <input type="text" class="form-control" placeholder="Entrez une expression québécoise" id="expressionInput">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="searchBtn">Rechercher</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for displaying the result -->
+<div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resultModalLabel">Résultat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="resultText"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('searchBtn').addEventListener('click', function() {
+    var expression = document.getElementById('expressionInput').value.trim();
+    fetch(`{% url 'display_meaning' %}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'expression=' + encodeURIComponent(expression)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('resultText').innerText = data.meaning;
+        } else {
+            document.getElementById('resultText').innerText = data.error;
+        }
+        $('#resultModal').modal('show');
+    });
+});
+</script>
+
+{% endblock %}

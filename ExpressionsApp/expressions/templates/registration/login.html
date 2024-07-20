@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-control {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #5C67F2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5058E5;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #5C67F2;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            width: 100%;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+            padding: 20px 10px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <h2>Login</h2>
+            <div class="form-control">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="form-control">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            <button type="submit">Login</button>
+            <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+        </form>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2024 by Joseph Samuel Jonathan & Jonathan Pierre Louis. </p>
+        <p>Licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+    </footer>
+</body>
+</html>
+

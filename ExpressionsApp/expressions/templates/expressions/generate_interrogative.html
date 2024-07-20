@@ -1,0 +1,71 @@
+{% extends 'expressions/base.html' %}
+{% load static %}
+
+{% block title %}Transformer une Phrase{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Transformer une Phrase Affirmative en Interrogative Québécoise</h1>
+    <a href="{% url 'main_menu' %}" class="back-button">Retour au Dashboard</a>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Entrez votre phrase ici" id="sentenceInput">
+        <div class="input-group-append">
+            <button class="btn btn-secondary" type="button" onclick="startDictation()"><i class="fas fa-microphone"></i></button>
+            <button class="btn btn-outline-secondary" type="button" id="transformBtn">Transformer</button>
+        </div>
+    </div>
+    <p class="mt-3" id="transformedSentence"></p>
+</div>
+
+<script>
+document.getElementById('transformBtn').addEventListener('click', function() {
+    var sentence = document.getElementById('sentenceInput').value.trim();
+    var outputDiv = document.getElementById('transformedSentence');
+    outputDiv.style.opacity = 0; // Hide before updating
+    
+    setTimeout(function() {
+        var words = sentence.split(' ');
+        var lastWord = words[words.length - 1].toLowerCase();
+        var validWords = ['vient', 'veux', 'veulent', 'écoutes', 'sais', 'a', 'ai'];
+        if (validWords.includes(lastWord)) {
+            outputDiv.innerText = sentence + '-tu ?';
+        } else {
+            outputDiv.innerText = "La phrase ne peut pas être transformée.";
+        }
+        outputDiv.style.opacity = 1; // Show with transition effect
+    }, 500); // Delay corresponds to the CSS transition duration
+});
+
+document.getElementById('sentenceInput').addEventListener('input', function(e) {
+    var value = e.target.value.trim();
+    if (value.split(' ').pop().match(/^(vient|veux|veulent|écoutes|sais|a|ai)$/)) {
+        e.target.classList.add('input-valid');
+        e.target.classList.remove('input-invalid');
+    } else {
+        e.target.classList.add('input-invalid');
+        e.target.classList.remove('input-valid');
+    }
+});
+
+function startDictation() {
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+        var recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = "fr-CA";
+        recognition.start();
+
+        recognition.onresult = function(e) {
+            document.getElementById('sentenceInput').value = e.results[0][0].transcript;
+            recognition.stop();
+            document.getElementById('transformBtn').click(); // Automatically click transform
+        };
+
+        recognition.onerror = function(e) {
+            recognition.stop();
+        }
+    }
+}
+</script>
+
+{% endblock %}

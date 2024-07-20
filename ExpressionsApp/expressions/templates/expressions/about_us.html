@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - ExpressionsApp</title>
+    <a href="{% url 'main_menu' %}" class="back-button">Retour au Dashboard</a>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        a {
+            color: #5C67F2;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>About Us - ExpressionsApp</h1>
+        <p>
+            `ExpressionsApp` est une application web développée pour le projet de fin de session du cours INF3400 de réseaux informatiques. Elle permet aux utilisateurs d'apprendre, de jouer et d'explorer des expressions québécoises de manière interactive.
+        </p>
+        <p>
+            <strong>Remarque spéciale</strong>: Nous avons pris un détour original pour notre devoir. Au lieu de créer une interface traditionnelle, nous avons décidé de développer un GUI web avec Django. Tout cela pour montrer notre volonté de progresser dans l'apprentissage et la connaissance du cours.
+        </p>
+        <h2>Créateurs</h2>
+        <ul>
+            <li>Joseph Samuel Jonathan</li>
+            <li>Jonathan Pierre Louis</li>
+        </ul>
+        <p>
+            Ce projet a été créé dans le cadre de l'assignation de fin de session pour le cours de réseaux informatiques, où l'objectif était de développer une application mettant en pratique les principes de communication client-serveur.
+        </p>
+        <h2>Fonctionnalités</h2>
+        <ul>
+            <li>Apprendre les expressions québécoises.</li>
+            <li>Générer des phrases interrogatives à partir d'affirmations.</li>
+            <li>Trouver la signification des expressions.</li>
+            <li>Participer à un jeu quiz sur les expressions.</li>
+        </ul>
+    </div>
+</body>
+</html>
