@@ -48,7 +48,7 @@ Ce projet a été créé dans le cadre de l'assignation de fin de session pour l
 Pour lancer le serveur de développement Django:
 
 
-Accédez à `http://127.0.0.1:8000/` dans votre navigateur pour utiliser l'application.
+Accédez à `http://127.0.0.1:1500/` dans votre navigateur pour utiliser l'application.
 
 ## Contributions
 Les contributions sont les bienvenues. Veuillez forker le dépôt et proposer des pull requests.
